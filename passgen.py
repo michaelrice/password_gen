@@ -6,7 +6,7 @@ lowers = string.ascii_lowercase
 uppers = string.ascii_uppercase
 nums = string.digits
 
-def gen_pass(length=20, min_char=5, max_char=6, min_num=2, max_num=3,
+def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
              min_special_char=1, max_special_char=1, special_list=None,
              max_upper=2, min_upper=1, max_lower=5, min_lower=2, padding=lowers):
 
