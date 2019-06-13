@@ -45,6 +45,15 @@ def test_required_lower_case_met():
     assert lower_count == 2
 
 
+def test_required_nums_case_met():
+    """
+    Make sure the required amount of numbers are preset in the password
+    """
+    passwd = gen_pass(min_num=2, max_num=2)
+    num_of_nums = sum(n.isnumeric() for n in passwd)
+    assert num_of_nums == 2
+
+
 def test_required_specials_met():
     """
     Make sure the password contains the correct number of special
