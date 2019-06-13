@@ -2,11 +2,13 @@ import random
 import string
 
 SPECIAL_LIST = "[!%@$^]"
+lowers = string.ascii_lowercase
+uppers = string.ascii_uppercase
+nums = string.digits
 
-
-def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
+def gen_pass(length=20, min_char=5, max_char=6, min_num=2, max_num=3,
              min_special_char=1, max_special_char=1, special_list=None,
-             max_upper=2, min_upper=1, max_lower=4, min_lower=2):
+             max_upper=2, min_upper=1, max_lower=5, min_lower=2, padding=lowers):
 
     if max_char < (min_lower + min_upper):
         raise Exception("max_char set to {0} but min_upper + min_lower exceeds"
@@ -27,13 +29,6 @@ def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
         raise Exception("Min fields totaled exceed specified length. "
                         "length={0}, mins_total={1}".format(length, passlen))
     passlen = max_char + max_num + max_special_char
-    if passlen < length:
-        raise Exception("Length requirement does not meet minimum requirement"
-                        " set. length={0}, max_total={1}".format(length,
-                                                                 passlen))
-    lowers = string.ascii_lowercase
-    uppers = string.ascii_uppercase
-    nums = string.digits
 
     u_lowers = "".join(random.choice(lowers) for i in range(min_lower))
     u_uppers = "".join(random.choice(uppers) for i in range(min_upper))
@@ -42,11 +37,11 @@ def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
     mypass = u_lowers + u_uppers + u_nums + u_specials
     if len(mypass) < length:
         more = length - len(mypass)
-        mypass += "".join(random.choice(lowers) for i in range(more))
+        mypass += "".join(random.choice(padding) for i in range(more))
     mypass = list(mypass)
     random.shuffle(mypass)
     return ''.join(mypass)
 
 
 if __name__ == "__main__":
-    print(gen_pass(length=12, max_char=10, min_num=2, max_num=3))
+    print(gen_pass())
