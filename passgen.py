@@ -2,14 +2,13 @@ import random
 import string
 
 SPECIAL_LIST = "[!%@$^]"
+lowers       = string.ascii_lowercase
+uppers       = string.ascii_uppercase
+nums         = string.digits
 
 
 def gen_pass(length=10, chars=7, req_nums=2, special_chars=1,
              special_char_list=None, upper=2, lower=5, padding=None):
-
-    lowers = string.ascii_lowercase
-    uppers = string.ascii_uppercase
-    nums = string.digits
 
     if padding is None:
         padding = lowers
@@ -47,4 +46,4 @@ def gen_pass(length=10, chars=7, req_nums=2, special_chars=1,
 
 
 if __name__ == "__main__":
-    print(gen_pass(length=20))
+    print(gen_pass())
