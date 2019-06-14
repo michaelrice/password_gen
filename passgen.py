@@ -43,7 +43,7 @@ def gen_pass(length=10, chars=7, req_nums=2, special_chars=1,
         mypass += "".join(random.choice(padding) for i in range(more))
     mypass = list(mypass)
     random.shuffle(mypass)
-    return ''.join(mypass)
+    return "".join(mypass)
 
 
 if __name__ == "__main__":
