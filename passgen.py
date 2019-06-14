@@ -2,38 +2,41 @@ import random
 import string
 
 SPECIAL_LIST = "[!%@$^]"
-lowers = string.ascii_lowercase
-uppers = string.ascii_uppercase
-nums = string.digits
 
-def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
-             min_special_char=1, max_special_char=1, special_list=None,
-             max_upper=2, min_upper=1, max_lower=5, min_lower=2, padding=lowers):
 
-    if max_char < (min_lower + min_upper):
-        raise Exception("max_char set to {0} but min_upper + min_lower exceeds"
-                        " that: {1}".format(max_char, (max_upper+max_lower)))
-    if special_list is None:
+def gen_pass(length=10, chars=7, req_nums=2, special_chars=1,
+             special_char_list=None, upper=2, lower=5, padding=None):
+
+    lowers = string.ascii_lowercase
+    uppers = string.ascii_uppercase
+    nums = string.digits
+
+    if padding is None:
+        padding = lowers
+    max_char = upper + lower
+    if max_char > chars:
+        raise Exception("chars set to {0} but upper + lower exceeds"
+                        " that: {1}".format(chars, max_char))
+
+    if special_char_list is None:
         specials = SPECIAL_LIST
     else:
-        if isinstance(special_list, str):
-            specials = list(special_list)
+        if isinstance(special_char_list, str):
+            specials = list(special_char_list)
         else:
             raise Exception("Unknown type passed for special_list. "
                             "Received {0} expected string".format(type(
-                                special_list))
+                                special_char_list))
                             )
 
-    passlen = min_char + min_num + min_special_char
+    passlen = chars + req_nums + special_chars
     if passlen > length:
-        raise Exception("Min fields totaled exceed specified length. "
-                        "length={0}, mins_total={1}".format(length, passlen))
-    passlen = max_char + max_num + max_special_char
-
-    u_lowers = "".join(random.choice(lowers) for i in range(min_lower))
-    u_uppers = "".join(random.choice(uppers) for i in range(min_upper))
-    u_nums = "".join(random.choice(nums) for i in range(min_num))
-    u_specials = "".join(random.choice(specials) for i in range(min_special_char))
+        raise Exception("chars + nums + special_chars total exceeds specified length. "
+                        "length={0}, total={1}".format(length, passlen))
+    u_lowers = "".join(random.choice(lowers) for i in range(lower))
+    u_uppers = "".join(random.choice(uppers) for i in range(upper))
+    u_nums = "".join(random.choice(nums) for i in range(req_nums))
+    u_specials = "".join(random.choice(specials) for i in range(special_chars))
     mypass = u_lowers + u_uppers + u_nums + u_specials
     if len(mypass) < length:
         more = length - len(mypass)
@@ -44,4 +47,4 @@ def gen_pass(length=10, min_char=5, max_char=6, min_num=2, max_num=3,
 
 
 if __name__ == "__main__":
-    print(gen_pass())
+    print(gen_pass(length=20))
